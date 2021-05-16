@@ -1,0 +1,5 @@
+entity 6.0.0
+
+1-enable-migrations
+2-add-migration migrationKutuphane
+3-update-database
