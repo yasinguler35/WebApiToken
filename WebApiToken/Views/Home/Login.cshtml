@@ -1,0 +1,51 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <script src="~/Scripts/jquery-3.6.0.min.js"></script>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+
+</head>
+<body>
+    <div>
+        <h2>Get Token</h2>
+        Username : <input type="text" id="txtUserName" /><br />
+        Password : <input type="text" id="txtPassword" /><br />
+        <button id="btnTokenAl">Get Token</button>
+        <div id="access_token" style="color:antiquewhite;font-size:10px;display:none;"></div>
+    </div>
+</body>
+</html>
+<script>
+    $("#btnTokenAl").click(function () {
+        var userName = $("#txtUserName").val();
+        var password = $("#txtPassword").val();
+        $.ajax({
+            url: "http://localhost:1715/token",
+            type: "POST",
+            crossDomain: true,
+            data: {
+                username: userName,
+                password: password,
+                grant_type: "password"
+            },
+            dataType: "json",
+            success: function (data) {
+                localStorage.setItem("Token", JSON.stringify(data));
+                $("#access_token").fadeIn(100, function () {
+                    $("#access_token").append("<br>" + data.access_token);
+                    $("#btnTokenAl").prop("disabled", true);
+                });
+            },
+            error: function (xhr, status, error) {
+                alert("Hata : " + error);
+            }
+        });
+    });
+</script>
