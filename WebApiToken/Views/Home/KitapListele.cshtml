@@ -1,0 +1,46 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <script src="~/Scripts/jquery-3.6.0.min.js"></script>
+    <meta name="viewport" content="width=device-width" />
+    <title>KitapListele</title>
+</head>
+<body>
+    <div>
+        <h2>Kitaplar</h2>
+        <button id="btnGetKitaplar">Kitap Listele</button>
+        <div id="allKitap" style="color:chocolate;font-size:12px;"></div>
+    </div>
+</body>
+</html>
+<script>
+    $("#btnGetKitaplar").click(function () {
+        $("#allKitaplar").html("");
+        var token = $.parseJSON(localStorage.getItem("Token")).access_token;
+        $.ajax({
+            url: "http://localhost:1715/api/kitap/GetKitaps",
+            type: "GET",
+            crossDomain: true,
+            dataType: "json",
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json",
+                "authorization": "Bearer " + token
+            },
+            success: function (data) {
+                $.each(data, function (IndexNo, Deger) {
+                    $("#allKitap").append(Deger.kitapAd + " " + Deger.yazarAd + "<br>");
+                });
+            },
+            error: function (xhr, status, error) {
+                alert("Hata : " + error);
+            }
+        });
+    });
+</script>

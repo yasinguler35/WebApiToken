@@ -13,5 +13,9 @@ namespace WebApiToken.Controllers
         {
             return View();
         }
+        public ActionResult KitapListele()
+        {
+            return View();
+        }
     }
 }
